@@ -25,8 +25,8 @@ function GetForm() {
        
         const name = document.getElementById("name").value;
         const loca = document.getElementById("selectLocation").value;
-    
-        setTableData([...tableData,{name: name, location: loca} ]);
+        if(validName)
+            setTableData([...tableData,{name: name, location: loca} ]);
     }
 
     useEffect(() => {
@@ -49,7 +49,10 @@ function GetForm() {
                     <Col sm={10}>
                         <Input id="name" placeholder="Enter Name" onChange={validateName} />
                     </Col>
-                    {!validName && <div>Name is invalid</div>}
+                    <Col sm={{size: 8, offset:2}} style={{ textAlign: 'left' }} className='text-danger'>
+                    {!validName && <span>Name is invalid....</span>}
+                    </Col>
+                   
                 </FormGroup>
                 <FormGroup row>
                     <Label for="selectLocation" sm={2}>Select Location</Label>
@@ -64,7 +67,7 @@ function GetForm() {
                 <FormGroup row>
                     <Col sm={{ size: 4, offset: 8 }} style={{ textAlign: 'right' }}>
                         <Button>Clear</Button>{" "}
-                        <Button onClick={addTableItem} >Add</Button>
+                        <Button onClick={addTableItem} disabled={!validName}>Add</Button>
                     </Col>
 
                 </FormGroup>
